@@ -4,6 +4,7 @@ import com.geekcattle.core.redis.RedisSessionDAO;
 import com.geekcattle.model.console.Admin;
 import com.geekcattle.service.console.AdminService;
 import com.geekcattle.service.console.MenuService;
+import com.geekcattle.util.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -72,6 +73,8 @@ public class AdminShiroRealm extends AuthorizingRealm {
             throw new UnknownAccountException();
         }
         String lock = "0";
+        userInfo.setUpdatedAt(DateUtil.getCurrentTime());
+        adminService.save(userInfo);
         if (lock.equals(userInfo.getState().toString())) {
             //帐号锁定
             throw new LockedAccountException();
@@ -89,7 +92,6 @@ public class AdminShiroRealm extends AuthorizingRealm {
                 //realm name
                 userInfo.getUsername()
         );
-
         return authenticationInfo;
     }
 
