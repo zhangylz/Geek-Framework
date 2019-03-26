@@ -58,9 +58,9 @@ public class HomeController {
     public String reg(){
         SecurityContext securityContext = SecurityUtil.getContext();
         if(SecurityUtil.isLogin()){
-            return "redirect:/member/index";
+            return "redirect:/member/index"; // api
         }
-        return "member/reg";
+        return "member/reg";  // resource
     }
 
 }
